@@ -11,6 +11,8 @@ function TodoForm({ addTodo }) {
     if (!inputValue) return alert("Ooops! todo will not be empty.");
 
     addTodo(todo);
+
+    setInputValue("");
   };
 
   return (
