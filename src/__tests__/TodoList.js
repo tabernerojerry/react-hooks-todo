@@ -27,6 +27,16 @@ const todos = [
   }
 ];
 
+test("<TodoList /> No Todos", () => {
+  const { container } = render(
+    <StoreProvider value={{ state: { todos: [] } }}>
+      <TodoList />
+    </StoreProvider>
+  );
+
+  expect(container.firstChild.textContent).toBe("Currently, No Todos!");
+});
+
 test("<TodoList /> #todos", () => {
   const dispatch = () => {};
   const { container, getAllByTestId } = render(
