@@ -1,26 +1,23 @@
-import React from "react";
+import React, { useContext, useReducer } from "react";
 
-import { TodoForm, TodoList, useTodos } from "./Todo";
+import useStore, { StoreProvider } from "../useStore";
+
+import { TodoForm, TodoList, reducer } from "./Todo";
 
 function App() {
-  const { addTodo, deleteTodo, completeTodo, state } = useTodos();
+  // create a global store to store the state
+  const globalStore = useContext(useStore);
+
+  // `todos` will be a state manager to manage state.
+  const [state, dispatch] = useReducer(reducer, globalStore);
+  console.log(state.todos);
 
   return (
-    <div>
-      <h1>React Hooks Todo</h1>
-
-      <TodoForm addTodo={addTodo} />
-
-      {state.todos.length > 0 ? (
-        <TodoList
-          todos={state.todos}
-          deleteTodo={deleteTodo}
-          completeTodo={completeTodo}
-        />
-      ) : (
-        <p>No Todos to display.</p>
-      )}
-    </div>
+    // State.Provider passes the state and dispatcher to the down
+    <StoreProvider value={{ state, dispatch }}>
+      <TodoForm />
+      <TodoList />
+    </StoreProvider>
   );
 }
 
